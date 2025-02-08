@@ -9,15 +9,11 @@ import os
 
 df = pd.read_csv("amazon_updated_data.csv")
 
-list(df)
-
 df2 = df
 
 df3 = df2[['product_id', 'main_category', 'sub_category', 'rating', 'rating_count', 'user_id']]
 
 from sklearn.preprocessing import LabelEncoder
-
-print(df3['rating'].unique())
 
 # Remove rows where 'rating' is not numeric
 df3 = df3[pd.to_numeric(df3['rating'], errors='coerce').notnull()]
@@ -37,11 +33,7 @@ df3['rating_count'] = pd.to_numeric(df3['rating_count'].replace({',': ''}, regex
 df3['main_category_encoded'] = pd.to_numeric(df3['main_category_encoded'], errors='coerce')
 df3['sub_category_encoded'] = pd.to_numeric(df3['sub_category_encoded'], errors='coerce')
 
-print(df3[['rating', 'rating_count', 'main_category_encoded', 'sub_category_encoded']].dtypes)
-
 df3['rating_count'].fillna(df3['rating_count'].mean(), inplace=True)
-
-print(df3[['rating', 'rating_count', 'main_category_encoded', 'sub_category_encoded']].dtypes)
 
 content_features = df3[['rating', 'rating_count', 'main_category_encoded', 'sub_category_encoded']].values
 content_similarity = cosine_similarity(content_features)
@@ -55,9 +47,6 @@ def get_content_based_recommendations(product_id, top_n=5):
 
 product_id_to_recommend = df3['product_id'].iloc[0]
 recommendations = get_content_based_recommendations(product_id_to_recommend, top_n=5)
-
-print("Recommendations for Product ID", product_id_to_recommend)
-print(recommendations)
 
 import pickle
 
