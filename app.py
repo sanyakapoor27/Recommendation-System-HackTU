@@ -5,6 +5,7 @@ from sklearn.preprocessing import MinMaxScaler
 from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
 import numpy as np
+import os
 
 df = pd.read_csv("amazon_updated_data.csv")
 
@@ -81,8 +82,10 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import pickle
 
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "content_recommender.pkl")
+
 # Load the recommender model
-with open("content_recommender.pkl", "rb") as f:
+with open(MODEL_PATH, "rb") as f:
     recommender = pickle.load(f)
 
 # Create FastAPI app
