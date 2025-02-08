@@ -3,4 +3,3 @@ uvicorn
 scikit-learn
 pydantic
 numpy
-pickle5
